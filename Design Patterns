@@ -1,1 +1,101 @@
+Patterns é uma metodologia que nos ajuda a implementar metodos de solução para determinada espécie de problema.
+
+---------------------------Visistor----------------------------
+O Problema
+Exemplo: Construa um algoritmo que represente uma loja virtual, essa loja deve vender seus produtos com preços diferentes para 
+determinada modalidade de venda, a loja possui as seguintes modalidades: Preço Presencial/Preço Telefone/Preço Site, os modificadores de ambos seguem: Preço Bruto/Preço Bruto + Frete Fixo/Preço Bruto + Frete Fixo + Taxa adicional
+Código:
+
+public class Produto{
+protected int ID;
+protected String nome;
+protected float preço;
+protected float valor_do_frete;
+protected float taxa_adicional;
+
+public void Produto(int ID, String nome,float preço,float valor_do_frete,float taxa_adicional){
+  this.ID=ID;
+  this.nome=nome;
+  this.preço=preço;
+  this.valor_do_frete=valor_do_frete;
+  this.taxa_adicional=taxa_adicional;
+}
+
+public float getpreço(){  /* preço bruto */
+return getpreço;
+}
+
+public float getpreçotelefone(){
+return preço+valor_do_frete;
+}
+
+public float getpreçosite(){
+return preço+taxa_adicional+valor_do_frete;
+}
+
+Qual o problema ?
+O Problema aqui é que estes metódos não devem pertencer a classe produto, pois veja que a mudança de preço é provocada por causas externas (o modelo de compra do cliente) isso em tese polui a classe produto desnecessariamente
+
+Veja que se agora minha loja deseja se especializar em vendas de Eletronicos poderiamos extender a classe produto para ProdutosEletronicos, imaginemos que a loja deseja agora colocar um desenconto na taxa adicional para a compra no site por conta do saldão porém não deseja incluir ProdutosEletronicos nesta promoção, ao modificarmos a taxa adicional a classe ProdutosEletronicos também sofrerá as consequencias por herdar o metodo getpreçosite() de Produtos.
+
+Em uma arquitetura em que possui uma estrutura de dados importante inserida, qualquer mudança necessária nesta estrutura pode causar um grande problema no sistema pois todas as outras estruturas dependentes desta poderão sofrer alterações a ponto do sistema quebrar, o exemplo acima é um exemplo fraco para este problema pois não é uma estrutura de dados e poderiamos solucionar este problema de outras maneiras mas a simplicidade nos ajuda a visualizar o problema que o visor busca solucionar, geralmente voltado para estrutura de dados complexas em que formam um papel importante no sistema a ser projetado.
+
+
+Implementando o Visitor no exemplo mostrado.
+
+
+public class Produto{
+protected int ID;
+protected String nome;
+protected float preço;
+protected float valor_do_frete;
+protected float taxa_adicional;
+
+public void Produto(int ID, String nome,float preço,float valor_do_frete,float taxa_adicional){
+  this.ID=ID;
+  this.nome=nome;
+  this.preço=preço;
+  this.valor_do_frete=valor_do_frete;
+  this.taxa_adicional=taxa_adicional;
+}
+publoc String getnome(){
+return this.nome;
+}
+
+public Object accept(Visitor visitor){
+return visitor.visit(this);
+}
+
+public interface Visitor{
+public float visit(Produto produto);
+}
+
+public class VisitorLoja implements Visitor{
+public float visit(Produto produto){
+return produto.preço;
+}}
+public class VisitorLojaTelefone implements Visitor{
+public float visit(Produto produto){
+return produto.preço+produto.valor_do_frete;
+}}
+public class VisitorLojaSite implements Visitor{
+public float visit(Produto produto){
+return produto.preço+produto.valor_do_frete+produto.taxa_adicional;
+}}
+
+Teste na main:
+
+VisitorLoja valorloja=new VisitorLoja();
+VisitorLojaSite valorsite=new VisitorLojaSite();
+VisitorLojaTelefone valortelefone= new VisitorLojaTelefone();
+Produto produto=new Produto(1234,Shampoo,10f,20f,25f);
+
+System.out.println("Valor do "+produto.getnome()+" pelo site é"+produto.accept(valorsite));
+
+Veja que os metodos que determinam o preço do produto estão fora da Classe produto e são determinados pela visita do Visitor, assim não precisando inserir metodos especificos dentro do produto ao que não é seu objetivo, outros elementos devem definir o preço do produto para cada local e não o produto definir essa regra.
+
+
+
+
+
 
