@@ -5,6 +5,7 @@ public class Produto {
 	private String Categoria;
 	private double Preço;
 	private boolean Usado;
+	private int ID_Prod;
 	
 	public Produto(String Nome,String Categoria,double Preço, boolean Usado) {
 		this.Nome=Nome;
@@ -13,7 +14,7 @@ public class Produto {
 		this.Usado=Usado;
 	}
 	public String toString() {
-		return this.Nome;
+		return "Nome produto: "+this.Nome+" \nPK: "+this.ID_Prod;
 	}
 
 	public Produto() {
@@ -49,6 +50,12 @@ public class Produto {
 
 	public void setUsado(boolean usado) {
 		Usado = usado;
+	}
+	public int getID_Prod() {
+		return ID_Prod;
+	}
+	public void setID_Prod(int iD_Prod) {
+		ID_Prod = iD_Prod;
 	}
 	
 	
