@@ -14,7 +14,7 @@ public class ProdutoDAO {
 		try {
 			this.conn=new ConnectionFactory().getConnection();
 			Statement statement = conn.createStatement();
-			statement.execute("CREATE TABLE IF NOT EXISTS produto (Nome VARCHAR(30),ID_Prod INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,Preço DOUBLE(10,2),Categoria VARCHAR(30),Usado BOOLEAN)");
+			statement.execute("CREATE TABLE IF NOT EXISTS produto (Nome VARCHAR(30),Preço DOUBLE(10,2),Categoria VARCHAR(30),Usado BOOLEAN,ID_Prod INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT)");
 		}
 		catch(SQLException e) {
 			e.printStackTrace();
@@ -49,10 +49,10 @@ public class ProdutoDAO {
 			ResultSet rs = stmt.executeQuery();
 			while(rs.next()) {
 				prodQUERY.setNome(rs.getString("Nome"));
-				prodQUERY.setID_Prod(rs.getInt("ID_Prod"));
 				prodQUERY.setPreço(rs.getDouble("Preço"));
 				prodQUERY.setCategoria(rs.getString("Categoria"));
 				prodQUERY.setUsado(rs.getBoolean("Usado"));
+				prodQUERY.setID_Prod(rs.getInt("ID_Prod"));
 			}
 			return prodQUERY;
 			

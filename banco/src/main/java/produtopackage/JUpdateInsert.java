@@ -37,9 +37,7 @@ public class JUpdateInsert extends JFrame {
 				String Nome=FieldI.getText();
 				ProdutoDAO dao = new ProdutoDAO();
 				Produto p = new Produto();
-				int z = Integer.parseInt(Nome);
-				p.setID_Prod(z); 
-				p.setNome(Nome);
+				p.setNome(FieldN.getText());
 				p.setCategoria(FieldC.getText());
 				p.setPreço(Double.parseDouble(FieldP.getText()));
 				p.setUsado(Boolean.parseBoolean(FieldU.getText()));
